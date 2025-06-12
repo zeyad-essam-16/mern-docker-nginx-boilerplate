@@ -8,7 +8,7 @@ This setup provides:
 - ⚙️ Express backend with Nodemon hot reload
 - 🐳 Dockerized dev and prod environments
 - 🌐 Nginx reverse proxy for production
-- 🔁 Persistent MongoDB volume with auth
+- 🔁 Persistent MongoDB volume
 - 🔒 Secure environment separation: `.env.development` and `.env.production`
 - 🧩 Clear dev/prod separation
 
@@ -78,7 +78,7 @@ docker compose -f docker-compose.yml --env-file .env.production up --build
 
 - **Frontend**: React, Vite, TypeScript
 - **Backend**: Express, Mongoose
-- **Database**: MongoDB with auth
+- **Database**: MongoDB
 - **Containerization**: Docker + Docker Compose
 - **Proxy (prod)**: Nginx
 - **Hot Reload**:
