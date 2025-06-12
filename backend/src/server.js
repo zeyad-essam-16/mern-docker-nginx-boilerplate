@@ -20,7 +20,7 @@ mongoose.connect(MONGO_URI)
 
 // Basic API route
 app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from the backend API!' });
+  res.json({ message: 'Hello from the backend!' });
 });
 
 // Example route for a simple resource

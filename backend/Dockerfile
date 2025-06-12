@@ -1,20 +1,16 @@
-# Use a slim Node.js image for production
 FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to leverage Docker cache
-COPY package.json package-lock.json ./
-
-# Install dependencies (production only)
+# Install only production dependencies
+COPY package*.json ./
 RUN npm install --production
 
-# Copy the rest of the application code
+# Copy source code
 COPY . .
 
-# Expose the port your Express app listens on
+# Expose backend port
 EXPOSE 5000
 
-# Command to run the application
-CMD ["node", "server.js"]
+# Start the server
+CMD ["npm", "start"]

@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install all dependencies (including dev for nodemon)
+COPY package*.json ./
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Install nodemon globally
+RUN npm install -g nodemon
+
+# Expose backend port
+EXPOSE 5000
+
+# Start the server with hot reload
+CMD ["npm", "run", "dev"]
