@@ -9,8 +9,11 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_USER: ${MONGO_INITDB_USER}
+      MONGO_INITDB_PWD: ${MONGO_INITDB_PWD}
     volumes:
-      - ./backend/mongo-volume:/data/db
+      - mongo-volume:/data/db
+      - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/db-init.js:ro
     networks:
       - mern
 
@@ -50,7 +53,7 @@ services:
       - mern
 
 volumes:
-  mongo-data:
+  mongo-volume:
 
 networks:
   mern:

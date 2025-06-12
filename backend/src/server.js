@@ -27,10 +27,10 @@ app.get('/api/items', (req, res) => {
 });
 
 
-app.get('/api/health', (req, res) => {
-  res.status(200).send('Backend is healthy!');
-});
+// app.get('/health', (req, res) => {
+//   res.status(200).send('Backend is healthy!');
+// });
 
 app.listen(PORT, () => {
-  console.log(`Backend server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
