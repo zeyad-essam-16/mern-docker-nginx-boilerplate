@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Pass the API URL to the frontend build process
+        VITE_REACT_APP_API_URL: http://localhost/api # Nginx will handle routing to backend via /api
+    ports:
+      - "80:80"
+    depends_on:
+      - backend # Frontend typically needs backend to be up for API calls, though Nginx handles the proxying
+    networks:
+      - mern-network
+    # No port mapping needed as Nginx handles access
+    restart: on-failure # Restart if it exits with an error
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGO_URI: mongodb://mongodb:27017/mern_db # 'mongodb' is the service name
+      # Add other environment variables from your .env file here for Docker Compose
+      # Example: JWT_SECRET=${JWT_SECRET} (if you use a .env file as below)
+    networks:
+      - mern-network
+    # No port mapping needed as Nginx handles access
+    restart: on-failure
+
+  mongodb:
+    image: mongo:latest
+    # ports:
+    #   - "27017:27017" # DO NOT expose in production unless absolutely necessary
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data
+    networks:
+      - mern-network
+    restart: always
+
+volumes:
+  mongo-data: # Define the named volume for MongoDB data persistence
+
+networks:
+  mern-network:
+    driver: bridge
