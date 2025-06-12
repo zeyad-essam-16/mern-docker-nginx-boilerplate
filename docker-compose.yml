@@ -9,8 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
-      - mongo-data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-data:/data/db
     deploy:
       resources:
         limits:
@@ -43,7 +42,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL:  http://localhost:5000/api #Change for your domain in production
+        VITE_API_URL:  http://localhost/api #Change for your domain in production
     ports:
       - "80:80"
     depends_on:
