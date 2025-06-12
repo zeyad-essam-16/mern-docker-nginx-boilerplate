@@ -18,17 +18,15 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Basic API route
 app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from the backend!' });
+  res.json({ message: 'Hello from the backend API!' });
 });
 
-// Example route for a simple resource
 app.get('/api/items', (req, res) => {
   res.json([{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }]);
 });
 
-// Health check endpoint (useful for Docker healthchecks)
+
 app.get('/api/health', (req, res) => {
   res.status(200).send('Backend is healthy!');
 });

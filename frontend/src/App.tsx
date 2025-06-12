@@ -40,9 +40,6 @@ function App() {
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
