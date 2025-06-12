@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
-      - ./mongo-data:/data/db
+      - ./backend/mongo-volume:/data/db
     deploy:
       resources:
         limits:
@@ -21,7 +21,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: docker-setup/Dockerfile
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${PORT}
@@ -40,7 +40,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: docker-setup/Dockerfile
       args:
         VITE_API_URL:  http://localhost/api #Change for your domain in production
     ports:

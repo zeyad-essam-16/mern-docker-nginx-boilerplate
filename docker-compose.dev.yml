@@ -17,7 +17,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: docker-setup/Dockerfile.dev
     ports:
       - "5000:5000"
     environment:
@@ -36,7 +36,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: docker-setup/Dockerfile.dev
     ports:
       - "3000:3000"
     environment:

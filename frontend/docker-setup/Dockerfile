@@ -14,7 +14,7 @@ RUN npm run build
 FROM nginx:1.28.0-alpine
 
 # Copy custom nginx config
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker-setup/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy build from previous stage
 COPY --from=builder /app/dist /usr/share/nginx/html

@@ -19,21 +19,24 @@ This setup provides:
 ```plaintext
 backend/
   ├── src/
-  ├── Dockerfile
-  └── Dockerfile.dev
+  └── docker-setup/
+      ├── Dockerfile
+      └── Dockerfile.dev
 
 frontend/
   ├── public/
   ├── src/
-  ├── nginx/
-  │   └── default.conf
-  ├── Dockerfile
-  └── Dockerfile.dev
+  └── docker-setup/
+      ├── nginx/
+      │   └── default.conf
+      ├── Dockerfile
+      └── Dockerfile.dev
 
 docker-compose.yml              # Production
 docker-compose.dev.yml         # Development
 .env.production
 .env.development
+
 ```
 
 ---
