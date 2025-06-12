@@ -10,7 +10,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
-      - mongo-data:/data/db
+      - ./backend/mongo-volume:/data/db
     networks:
       - mern
 
