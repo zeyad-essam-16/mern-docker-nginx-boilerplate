@@ -15,7 +15,7 @@ services:
       - mongo-volume:/data/db
       - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/db-init.js:ro
     networks:
-      - mern
+      - default
 
   backend:
     build:
@@ -34,7 +34,8 @@ services:
     depends_on:
       - mongo
     networks:
-      - mern
+      - default
+      - frontend
 
   frontend:
     build:
@@ -50,10 +51,13 @@ services:
     depends_on:
       - backend
     networks:
-      - mern
+      - frontend
 
 volumes:
   mongo-volume:
 
 networks:
-  mern:
+  default:
+    name: backend-mern-docker-nginx
+  frontend:
+    name: frontend-mern-docker-nginx

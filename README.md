@@ -36,7 +36,6 @@ docker-compose.yml              # Production
 docker-compose.dev.yml         # Development
 .env.production
 .env.development
-
 ```
 
 ---
@@ -63,7 +62,9 @@ Access:
 ### 🚢 Production
 
 1. Set up your `.env.production` file.
-2. Run production build:
+2. **Update your domain in:**
+   - `frontend/docker-setup/nginx/default.conf`: `server_name yourdomain.com www.yourdomain.com;`
+3. Run production build:
 
 ```bash
 docker compose -f docker-compose.yml --env-file .env.production up --build
@@ -77,8 +78,8 @@ docker compose -f docker-compose.yml --env-file .env.production up --build
 ## 🔨 Tech Stack
 
 - **Frontend**: React, Vite, TypeScript
-- **Backend**: Express, Mongoose
-- **Database**: MongoDB
+- **Backend**: Express
+- **Database**: MongoDB, Mongoose
 - **Containerization**: Docker + Docker Compose
 - **Proxy (prod)**: Nginx
 - **Hot Reload**:
@@ -106,16 +107,16 @@ MONGO_URI=mongodb://appuser:devapppass123@mongo:27017/mern_db?authSource=mern_db
 
 # JWT secret used for token signing
 JWT_SECRET=devsecretkey123
-
 ```
 
 ---
 
 ## 🌐 Routing
 
-- `http://localhost:5000/api` (dev)
-- `/api` in production via Nginx
-- Vite serves dev frontend at `:3000`, Nginx serves prod frontend at `:80`
+- API Base Path: `/api`
+- Dev: `http://localhost:5000/api`
+- Prod: `/api` via Nginx reverse proxy
+- All backend routes are prefixed with `/api` (e.g., `/api/auth/login`)
 
 ---
 
@@ -135,5 +136,38 @@ JWT_SECRET=devsecretkey123
 
 ---
 
-Built with ❤️ by [Zeyad Essam](https://github.com/zeyad-essam-16).  
-Feel free to fork or contribute!
+## 🔒 HTTPS with Certbot (Production)
+
+This boilerplate includes optional HTTPS support using **Certbot + Nginx** — pre-installed inside the production frontend container.
+
+### 🧪 Quick Manual Test (with a real domain)
+
+> ⚠️ **Certbot does not work with temporary domains like ngrok or localhost** — use a real domain that points to your server’s public IP.
+
+1. **Enter the frontend container**:
+
+```bash
+docker exec -it <frontend-container-name> bash
+```
+
+2. **Run Certbot to generate an SSL certificate**:
+
+```bash
+certbot --nginx -d example.com -d www.example.com --agree-tos --email your@email.com --non-interactive
+```
+
+3. **Success!** Nginx will automatically reload with the new certificate.
+
+---
+
+### 💡 Optional: Auto-Renewal
+
+You can schedule automatic renewals with:
+
+```bash
+certbot renew --nginx
+```
+
+You can set this up using a `cron` job or a systemd timer in production.
+
+✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
