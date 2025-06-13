@@ -12,7 +12,7 @@ services:
       MONGO_INITDB_USER: ${MONGO_INITDB_USER}
       MONGO_INITDB_PWD: ${MONGO_INITDB_PWD}
     volumes:
-      - mongo-volume:/data/db
+      - ./backend/docker-setup/mongo/mongo-volume:/data/db
       - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/db-init.js:ro
     networks:
       - default
@@ -52,9 +52,6 @@ services:
       - backend
     networks:
       - frontend
-
-volumes:
-  mongo-volume:
 
 networks:
   default:

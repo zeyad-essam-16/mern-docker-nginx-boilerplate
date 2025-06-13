@@ -170,4 +170,23 @@ certbot renew --nginx
 
 You can set this up using a `cron` job or a systemd timer in production.
 
+---
+
+### 📦 Persist SSL Certificates (Recommended)
+
+By default, SSL certificates created inside a Docker container will be **deleted when the container is removed**.
+
+To **persist your Certbot certificates**, add the following volume mappings to the **frontend service in `docker-compose.yml`**:
+
+```yaml
+frontend:
+  volumes:
+    - ./certbot/letsencrypt:/etc/letsencrypt
+    - ./certbot/lib:/var/lib/letsencrypt
+    - ./certbot/log:/var/log/letsencrypt
+```
+
+> 📁 You can create the `certbot/` folder manually at the project root.  
+> 🔒 **Do not commit certificate files to version control.**
+
 ✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
