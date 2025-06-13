@@ -1,9 +1,13 @@
 node_modules
 .env*
 
-# Ignore MongoDB data
-backend/docker-setup/mongo/mongo-volume/*
-!backend/docker-setup/mongo/mongo-volume/.gitkeep
+# Dev MongoDB
+backend/docker-setup/mongo/dev-volume/*
+!backend/docker-setup/mongo/dev-volume/.gitkeep
+
+# Prod MongoDB
+backend/docker-setup/mongo/prod-volume/*
+!backend/docker-setup/mongo/prod-volume/.gitkeep
 
 # Ignore Certbot volumes
 certbot/letsencrypt/*
