@@ -88,7 +88,7 @@ Access:
 
 ### 🚢 Production
 
-1. Set up your `.env.production` files in each service directory (`frontend/`, `backend/`, and root-level for Mongo).
+1. Set up your `.env.production` files in each service directory (`frontend/`, `backend/`).
 2. **Update your domain in:**
 
    - `frontend/docker-setup/nginx/default.conf`: `server_name yourdomain.com www.yourdomain.com;`
@@ -180,7 +180,6 @@ JWT_SECRET=a_very_secret_key_for_jwt_tokens_change_this_in_production
 
 ## 🌐 Routing
 
-- API Base Path: `/api`
 - Dev: `http://localhost:5000/api`
 - Prod: `/api` via Nginx reverse proxy
 - All backend routes are prefixed with `/api` (e.g., `/api/auth/login`)
@@ -240,12 +239,3 @@ frontend:
 > 🔒 **Do not commit certificate files to version control.**
 
 ✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
-
-```
-
-# Save to a markdown file
-file_path = Path("/mnt/data/README_UPDATED.md")
-file_path.write_text(readme_content)
-
-file_path
-```
