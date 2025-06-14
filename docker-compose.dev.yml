@@ -5,12 +5,7 @@ services:
     image: mongo:6.0.14
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
-      MONGO_INITDB_USER: ${MONGO_INITDB_USER}
-      MONGO_INITDB_PWD: ${MONGO_INITDB_PWD}
+    env_file: ./backend/.env.development
     volumes:
       - ./backend/docker-setup/mongo/dev-volume:/data/db
       - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/db-init.js:ro
@@ -23,11 +18,7 @@ services:
       dockerfile: docker-setup/Dockerfile.dev
     ports:
       - "5000:5000"
-    environment:
-      NODE_ENV: ${NODE_ENV}
-      PORT: ${PORT}
-      MONGO_URI: ${MONGO_URI}
-      JWT_SECRET: ${JWT_SECRET}
+    env_file: ./backend/.env.development
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -43,11 +34,10 @@ services:
       dockerfile: docker-setup/Dockerfile.dev
     ports:
       - "3000:3000"
-    environment:
-      VITE_API_URL: http://localhost:5000/api
     volumes:
       - ./frontend:/app
       - /app/node_modules
+      - ./frontend/.env.development:/app/.env
     depends_on:
       - backend
     networks:

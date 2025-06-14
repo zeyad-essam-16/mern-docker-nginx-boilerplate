@@ -24,21 +24,21 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-if (process.env.NODE_ENV === "production") {
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 300,
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-  app.use(limiter);
-}
+// if (process.env.NODE_ENV === "production") {
+//   const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000,
+//     max: 1000,
+//     standardHeaders: true,
+//     legacyHeaders: false,
+//   });
+//   app.use(limiter);
+// }
 
 // Routes
 app.use('/api', apiRoutes);
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.send('✅ Backend is healthy!');
 });
 

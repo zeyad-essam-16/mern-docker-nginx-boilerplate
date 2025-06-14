@@ -1,15 +1,8 @@
-version: '3.8'
-
 services:
   mongo:
     image: mongo:6.0.14
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
-      MONGO_INITDB_USER: ${MONGO_INITDB_USER}
-      MONGO_INITDB_PWD: ${MONGO_INITDB_PWD}
+    env_file: ./backend/.env.production
     volumes:
       - ./backend/docker-setup/mongo/prod-volume:/data/db
       - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/db-init.js:ro
@@ -26,10 +19,8 @@ services:
       context: ./backend
       dockerfile: docker-setup/Dockerfile
     environment:
-      NODE_ENV: ${NODE_ENV}
-      PORT: ${PORT}
-      MONGO_URI: ${MONGO_URI}
-      JWT_SECRET: ${JWT_SECRET}
+      - NODE_ENV=production
+    env_file: ./backend/.env.production
     depends_on:
       - mongo
     networks:
@@ -45,8 +36,8 @@ services:
     build:
       context: ./frontend
       dockerfile: docker-setup/Dockerfile
-      args:
-        VITE_API_URL: /api
+    environment:
+      - NODE_ENV=production
     ports:
       - "80:80"
       - "443:443"
