@@ -247,3 +247,21 @@ frontend:
 ```
 
 ✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
+
+---
+
+## 🛠️ Work in Progress
+
+This boilerplate is actively maintained and under development. Upcoming features include:
+
+- 🔑 Authentication & protected routes
+- 🔄 Automatic SSL certificate renewal
+- 🧰 Built-in CI/CD templates (GitHub Actions)
+- 📦 Optional Redis and background jobs
+
+---
+
+## 🤝 Contributing & Feedback
+
+Have suggestions or improvements?  
+Feel free to open an issue or PR — feedback is welcome!
