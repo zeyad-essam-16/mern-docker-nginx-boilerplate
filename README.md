@@ -40,6 +40,7 @@ This setup provides:
 ```
 backend/
   ├── src/
+  ├── logs/
   ├── .env.production
   ├── .env.development
   └── docker-setup/
@@ -91,11 +92,12 @@ Access:
 1. Set up your `.env.production` files in each service directory (`frontend/`, `backend/`).
 2. **Update your domain in:**
 
-   - `frontend/docker-setup/nginx/default.conf`: 
+   - `frontend/docker-setup/nginx/default.conf`:
+
 ```nginx
 server {
   listen 80;
-  server_name yourdomain.com 
+  server_name yourdomain.com
           www.yourdomain.com; # <--- update this
   ...
 }

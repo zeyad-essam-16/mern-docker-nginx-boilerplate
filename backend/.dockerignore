@@ -2,3 +2,11 @@ node_modules
 npm-debug.log
 Dockerfile
 .env
+
+# Ignore all logs, but keep folder structure via .gitkeep
+logs/combined/*
+logs/error/*
+logs/*.log
+logs/*.gz
+!logs/combined/.gitkeep
+!logs/error/.gitkeep
