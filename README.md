@@ -91,7 +91,15 @@ Access:
 1. Set up your `.env.production` files in each service directory (`frontend/`, `backend/`).
 2. **Update your domain in:**
 
-   - `frontend/docker-setup/nginx/default.conf`: `server_name yourdomain.com www.yourdomain.com;`
+   - `frontend/docker-setup/nginx/default.conf`: 
+```nginx
+server {
+  listen 80;
+  server_name yourdomain.com 
+          www.yourdomain.com; # <--- update this
+  ...
+}
+```
 
 3. Run production build:
 
@@ -239,3 +247,27 @@ frontend:
 ```
 
 ✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
+
+---
+
+## 🛠️ Work in Progress
+
+This boilerplate is actively maintained and under development. Upcoming features include:
+
+- 🔑 Authentication & protected routes
+- 🔄 Automatic SSL certificate renewal
+- 🧰 Built-in CI/CD templates (GitHub Actions)
+- 📦 Optional Redis and background jobs
+
+---
+
+## 🤝 Contributing & Feedback
+
+Have suggestions or improvements?  
+Feel free to open an issue or PR — feedback is welcome!
+
+---
+
+## 📝 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
