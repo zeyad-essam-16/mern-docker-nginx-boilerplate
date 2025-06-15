@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>MERN Starter</h1>
+      <h1>MERN_STARTER</h1>
 
       <form onSubmit={handleAdd} className="form">
         <input
