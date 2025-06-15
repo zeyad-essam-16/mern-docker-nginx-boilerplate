@@ -1,6 +1,6 @@
 # MERN + Nginx Docker Boilerplate
 
-A modern, scalable boilerplate for MERN stack applications with complete Docker support for both development and production environments.
+A production-grade boilerplate for building, testing, and deploying MERN apps using Docker and Nginx. Designed to get you up and running with a scalable architecture in minutes.
 
 This setup provides:
 
@@ -67,13 +67,13 @@ docker-compose.dev.yml         # Development
 
 ## 🚀 Quick Start
 
-📝 **Before starting, make sure to create the required `.env.development` or `.env.production` files in `frontend/` and `backend/` directories as described in 📘 Environment Setup.**
+📝 **Before starting, make sure to create the required `.env.development` or `.env.production` files in `frontend/` and `backend/` directories as described in 📘 Environment Setup below.**
 
 ### 🔧 Development
 
 Run everything with hot reload:
 
-```
+```bash
 docker compose -f docker-compose.dev.yml up --build
 ```
 
@@ -95,7 +95,7 @@ Access:
 
 3. Run production build:
 
-```
+```bash
 docker compose -f docker-compose.yml up --build
 ```
 
@@ -114,6 +114,9 @@ Each service (`frontend`, `backend`) has its own `.env.production` and `.env.dev
 
   > This avoids confusion and mimics production behavior where `.env.production` becomes `.env` during the build.
 
+  > 🔍 **Why does `.env` show up in dev?**  
+  > Docker bind-mounts your `.env.development` file to `.env` inside the container so Vite can find it. It’s safe to ignore this file locally — it's never committed.
+
 - **Production**: `frontend/.env.production` is renamed to `.env` inside the Dockerfile before the Vite build step to ensure all `VITE_` prefixed variables are correctly injected.
 
 #### ✅ Example Frontend Environment Files
@@ -121,18 +124,25 @@ Each service (`frontend`, `backend`) has its own `.env.production` and `.env.dev
 **.env.development**
 
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL= http://localhost:5000/api
 ```
 
 **.env.production**
 
 ```env
-VITE_API_URL=/api
+VITE_API_URL= /api
 ```
 
 ### Backend
 
-- Both development and production use the corresponding `.env.*` files via `env_file:` in Docker Compose or `environment:` blocks.
+- **Development**: `backend/.env.development` is bind-mounted to `.env` inside the container. This enables **dotenv** to pick up environment variables on changes without requiring image rebuilds or container restarts.
+
+  > This setup allows **fast refresh** during development. Any updates to the `.env.development` file are immediately available to the backend via the `.env` binding.
+
+  > 🔍 **Why does `.env` show up in dev?**  
+  > Docker bind-mounts your `.env.development` file to `.env` inside the container so dotenv can automatically load it. The empty `.env` file that may appear on your host machine can be ignored — it's just a side effect of the bind mount.
+
+- **Production**: `backend/.env.production` is provided using the `env_file:` directive in Docker Compose.
 
 #### ✅ Example Backend Environment Files
 
@@ -196,13 +206,13 @@ This boilerplate includes optional HTTPS support using **Certbot + Nginx** — p
 
 1. **Enter the frontend container**:
 
-```
+```bash
 docker exec -it <frontend-container-name> bash
 ```
 
 2. **Run Certbot to generate an SSL certificate**:
 
-```
+```bash
 certbot --nginx -d example.com -d www.example.com --agree-tos --email your@email.com --non-interactive
 ```
 
@@ -214,7 +224,7 @@ certbot --nginx -d example.com -d www.example.com --agree-tos --email your@email
 
 You can schedule automatic renewals with:
 
-```
+```bash
 certbot renew --nginx
 ```
 
@@ -228,14 +238,12 @@ By default, SSL certificates created inside a Docker container will be **deleted
 
 To **persist your Certbot certificates**, add the following volume mappings to the **frontend service in `docker-compose.yml`**:
 
-```
+```yaml
 frontend:
   volumes:
     - ./certbot/letsencrypt:/etc/letsencrypt
     - ./certbot/lib:/var/lib/letsencrypt
     - ./certbot/log:/var/log/letsencrypt
 ```
-
-> 🔒 **Do not commit certificate files to version control.**
 
 ✅ Certbot and its Nginx plugin are already pre-installed in the image. No extra setup needed — just run the above commands when you're ready.
