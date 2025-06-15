@@ -110,12 +110,7 @@ Each service (`frontend`, `backend`) has its own `.env.production` and `.env.dev
 
 ### Frontend
 
-- **Development**: `frontend/.env.development` is mounted into the container as `.env`, so Vite can auto-load it without extra configuration.
-
-  > This avoids confusion and mimics production behavior where `.env.production` becomes `.env` during the build.
-
-  > 🔍 **Why does `.env` show up in dev?**  
-  > Docker bind-mounts your `.env.development` file to `.env` inside the container so Vite can find it. It’s safe to ignore this file locally — it's never committed.
+- **Development**: `frontend/.env.development` is mounted into the container as `.env.development`, so Vite can auto-load it without extra configuration.
 
 - **Production**: `frontend/.env.production` is renamed to `.env` inside the Dockerfile before the Vite build step to ensure all `VITE_` prefixed variables are correctly injected.
 
@@ -138,9 +133,6 @@ VITE_API_URL= /api
 - **Development**: `backend/.env.development` is bind-mounted to `.env` inside the container. This enables **dotenv** to pick up environment variables on changes without requiring image rebuilds or container restarts.
 
   > This setup allows **fast refresh** during development. Any updates to the `.env.development` file are immediately available to the backend via the `.env` binding.
-
-  > 🔍 **Why does `.env` show up in dev?**  
-  > Docker bind-mounts your `.env.development` file to `.env` inside the container so dotenv can automatically load it. The empty `.env` file that may appear on your host machine can be ignored — it's just a side effect of the bind mount.
 
 - **Production**: `backend/.env.production` is provided using the `env_file:` directive in Docker Compose.
 

@@ -1,5 +1,7 @@
+import { errorLogger } from "../utils/logger.js";
+
 const errorHandler = (err, req, res, next) => {
-  console.error('Error:', err);
+  errorLogger.error(err);
 
   const statusCode = res.statusCode >= 400 ? res.statusCode : 500;
 
